@@ -1,9 +1,10 @@
 # Changelog
 
-## [0.0.1](https://github.com/lonegunmanb/auto-tag-test/tree/0.0.1) (2022-12-12)
+## [Unreleased](https://github.com/lonegunmanb/auto-tag-test/tree/HEAD)
 
 **Merged pull requests:**
 
+- Pr3, this is pr3 [\#3](https://github.com/lonegunmanb/auto-tag-test/pull/3) ([lonegunmanb](https://github.com/lonegunmanb))
 - pr2, this is pr2 [\#2](https://github.com/lonegunmanb/auto-tag-test/pull/2) ([lonegunmanb](https://github.com/lonegunmanb))
 - pr1, this is pr1 [\#1](https://github.com/lonegunmanb/auto-tag-test/pull/1) ([lonegunmanb](https://github.com/lonegunmanb))
 
