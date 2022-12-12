@@ -38,14 +38,12 @@ jobs:
             MAJOR_VERSION=$((MAJOR_VERSION+1))
           fi
           
-          if [ "0" = $MAJOR_VERSION ]; then
+          previous_tag=$(docker run -e MAJOR_VERSION --rm mcr.microsoft.com/azterraform:latest previousTag ${{ github.repository_owner }} ${{ github.event.repository.name }} $MAJOR_VERSION.0.0)
+          
+          if [ -z $previous_tag ]; then
             docker run --rm -v $(pwd):/src -w /src githubchangeloggenerator/github-changelog-generator -u ${{ github.repository_owner }} -p ${{ github.event.repository.name }} -t ${{ secrets.GITHUB_TOKEN }} --no-issues --no-compare-link
           else
-            if [ $(git tag -l "$MAJOR_VERSION.0.0") ]; then
-              docker run --rm -v $(pwd):/src -w /src githubchangeloggenerator/github-changelog-generator -u ${{ github.repository_owner }} -p ${{ github.event.repository.name }} -t ${{ secrets.GITHUB_TOKEN }} --no-issues --no-compare-link --include-tags-regex "$MAJOR_VERSION\..*\..*"
-            else
-              docker run --rm -v $(pwd):/src -w /src githubchangeloggenerator/github-changelog-generator -u ${{ github.repository_owner }} -p ${{ github.event.repository.name }} -t ${{ secrets.GITHUB_TOKEN }} --no-issues --no-compare-link --since-tag "${{ steps.get-latest-tag.outputs.tag }}"
-            fi
+            docker run --rm -v $(pwd):/src -w /src -e PREVIOUS_TAG=$previous_tag githubchangeloggenerator/github-changelog-generator -u ${{ github.repository_owner }} -p ${{ github.event.repository.name }} -t ${{ secrets.GITHUB_TOKEN }} --no-issues --no-compare-link --since-tag "$PREVIOUS_TAG"
           fi
           sudo chmod -R ugo+rwX .
       - name: Commit & Push changes
