@@ -37,14 +37,15 @@ jobs:
             MAJOR_VERSION=${MAJOR_VERSION#"v"}
             MAJOR_VERSION=$((MAJOR_VERSION+1))
           fi
-          error=false
-          docker run --rm -v $(pwd):/src -w /src githubchangeloggenerator/github-changelog-generator -u ${{ github.repository_owner }} -p ${{ github.event.repository.name }} -t ${{ secrets.GITHUB_TOKEN }} --no-issues --no-compare-link --since-tag "$MAJOR_VERSION.0.0" || error=true
-          if $error; then
-            error=false
-            docker run --rm -v $(pwd):/src -w /src githubchangeloggenerator/github-changelog-generator -u ${{ github.repository_owner }} -p ${{ github.event.repository.name }} -t ${{ secrets.GITHUB_TOKEN }} --no-issues --no-compare-link --since-tag "${{ steps.get-latest-tag.outputs.tag }}" || error=true
-          fi
-          if $error; then
+          
+          if [ "0" = $MAJOR_VERSION ]; then
             docker run --rm -v $(pwd):/src -w /src githubchangeloggenerator/github-changelog-generator -u ${{ github.repository_owner }} -p ${{ github.event.repository.name }} -t ${{ secrets.GITHUB_TOKEN }} --no-issues --no-compare-link
+          else
+            if [ $(git tag -l "$MAJOR_VERSION.0.0") ]; then
+              docker run --rm -v $(pwd):/src -w /src githubchangeloggenerator/github-changelog-generator -u ${{ github.repository_owner }} -p ${{ github.event.repository.name }} -t ${{ secrets.GITHUB_TOKEN }} --no-issues --no-compare-link --include-tags-regex "$MAJOR_VERSION\..*\..*"
+            else
+              docker run --rm -v $(pwd):/src -w /src githubchangeloggenerator/github-changelog-generator -u ${{ github.repository_owner }} -p ${{ github.event.repository.name }} -t ${{ secrets.GITHUB_TOKEN }} --no-issues --no-compare-link --since-tag "${{ steps.get-latest-tag.outputs.tag }}"
+            fi
           fi
           sudo chmod -R ugo+rwX .
       - name: Commit & Push changes
