@@ -4,6 +4,7 @@
 
 **Merged pull requests:**
 
+- This is pr2 [\#2](https://github.com/lonegunmanb/auto-tag-test/pull/2) ([lonegunmanb](https://github.com/lonegunmanb))
 - This is pr1 [\#1](https://github.com/lonegunmanb/auto-tag-test/pull/1) ([lonegunmanb](https://github.com/lonegunmanb))
 
 
