@@ -1,6 +1,6 @@
 # Changelog
 
-## [Unreleased](https://github.com/lonegunmanb/auto-tag-test/tree/HEAD)
+## [1.0.0](https://github.com/lonegunmanb/auto-tag-test/tree/1.0.0) (2022-12-13)
 
 **Merged pull requests:**
 
