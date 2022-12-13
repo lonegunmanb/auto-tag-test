@@ -1,5 +1,11 @@
 # Changelog
 
+## [Unreleased](https://github.com/lonegunmanb/auto-tag-test/tree/HEAD)
+
+**Merged pull requests:**
+
+- This is pr4 [\#4](https://github.com/lonegunmanb/auto-tag-test/pull/4) ([lonegunmanb](https://github.com/lonegunmanb))
+
 ## [1.0.0](https://github.com/lonegunmanb/auto-tag-test/tree/1.0.0) (2022-12-13)
 
 **Merged pull requests:**
