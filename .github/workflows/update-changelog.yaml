@@ -30,12 +30,10 @@ jobs:
           fi
           
           previous_tag=$(docker run -e MAJOR_VERSION=$MAJOR_VERSION --rm mcr.microsoft.com/azterraform:latest previousTag ${{ github.repository_owner }} ${{ github.event.repository.name }} $MAJOR_VERSION.0.0)
-          echo "previous_tag is ====>"
-          echo $previous_tag
           if [ -z $previous_tag ]; then
             docker run --rm -v $(pwd):/src -w /src githubchangeloggenerator/github-changelog-generator -u ${{ github.repository_owner }} -p ${{ github.event.repository.name }} -t ${{ secrets.GITHUB_TOKEN }} --no-issues --no-compare-link
           else
-            docker run --rm -v $(pwd):/src -w /src -e PREVIOUS_TAG=$previous_tag githubchangeloggenerator/github-changelog-generator -u ${{ github.repository_owner }} -p ${{ github.event.repository.name }} -t ${{ secrets.GITHUB_TOKEN }} --no-issues --no-compare-link --since-tag "$PREVIOUS_TAG"
+            docker run --rm -v $(pwd):/src -w /src githubchangeloggenerator/github-changelog-generator -u ${{ github.repository_owner }} -p ${{ github.event.repository.name }} -t ${{ secrets.GITHUB_TOKEN }} --no-issues --no-compare-link --since-tag=$previous_tag
           fi
           sudo chmod -R ugo+rwX .
       - name: Commit & Push changes
